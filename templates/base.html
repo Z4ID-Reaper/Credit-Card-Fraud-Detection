@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Credit Card Fraud Detection{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <header class="navbar">
+    <div class="navbar-inner">
+      <a href="{{ url_for('home') }}" class="brand">🛡️ Fraud Detection</a>
+      <nav>
+        <a href="{{ url_for('home') }}">Predict</a>
+        <a href="{{ url_for('metrics_page') }}">Model Metrics</a>
+      </nav>
+    </div>
+  </header>
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+  <footer class="footer">
+    <p>Credit Card Fraud Detection Using Machine Learning &mdash; BCA Minor Project</p>
+  </footer>
+</body>
+</html>

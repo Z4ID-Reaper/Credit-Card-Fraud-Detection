@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}Predict a Transaction{% endblock %}
+{% block content %}
+
+<section class="hero">
+  <h1>Credit Card Fraud Detection</h1>
+  <p>Enter transaction details below to check whether the model predicts it as <strong>Genuine</strong> or <strong>Fraudulent</strong>.</p>
+</section>
+
+{% if not model_ready %}
+  <div class="alert alert-warning">
+    ⚠️ Model not found. Please run <code>python train_model.py</code> in the project root, then restart the app.
+  </div>
+{% endif %}
+
+{% if error %}
+  <div class="alert alert-error">{{ error }}</div>
+{% endif %}
+
+{% if result %}
+  <div class="result-card {{ 'fraud' if result.is_fraud else 'genuine' }}">
+    <h2>Prediction: {{ result.label }}</h2>
+    <p>Model confidence (fraud probability): <strong>{{ result.probability }}%</strong></p>
+  </div>
+{% endif %}
+
+{% if model_ready %}
+<form method="POST" action="{{ url_for('predict') }}" class="predict-form">
+
+  <div class="form-section">
+    <h3>Key Transaction Details</h3>
+    <div class="form-grid">
+      <div class="form-field">
+        <label for="Amount">Transaction Amount</label>
+        <input type="number" step="0.01" name="Amount" id="Amount" value="{{ submitted_values['Amount'] if submitted_values else 100.00 }}" required>
+      </div>
+      <div class="form-field">
+        <label for="Time">Time (seconds since first transaction)</label>
+        <input type="number" step="1" name="Time" id="Time" value="{{ submitted_values['Time'] if submitted_values else 50000 }}" required>
+      </div>
+    </div>
+  </div>
+
+  <details class="form-section">
+    <summary>Advanced: PCA Features (V1&ndash;V28)</summary>
+    <p class="hint">These correspond to anonymised transaction features from the original dataset. Leave as 0 if unknown.</p>
+    <div class="form-grid v-grid">
+      {% for i in range(1, 29) %}
+        {% set fname = "V" ~ i %}
+        <div class="form-field">
+          <label for="{{ fname }}">{{ fname }}</label>
+          <input type="number" step="any" name="{{ fname }}" id="{{ fname }}"
+                 value="{{ submitted_values[fname] if submitted_values else 0 }}">
+        </div>
+      {% endfor %}
+    </div>
+  </details>
+
+  <button type="submit" class="btn-primary">Predict Transaction</button>
+</form>
+{% endif %}
+
+{% endblock %}

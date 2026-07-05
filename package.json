@@ -1,0 +1,14 @@
+{
+  "name": "credit-card-fraud-detection",
+  "version": "1.0.0",
+  "description": "Credit Card Fraud Detection using Machine Learning - Flask + Random Forest web app (BCA Minor Project)",
+  "scripts": {
+    "setup": "pip install -r requirements.txt",
+    "generate-data": "python data/generate_synthetic_data.py",
+    "train": "python train_model.py",
+    "dev": "node dev.js",
+    "start": "node dev.js"
+  },
+  "author": "",
+  "license": "MIT"
+}
