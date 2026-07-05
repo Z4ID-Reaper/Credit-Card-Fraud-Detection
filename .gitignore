@@ -5,13 +5,7 @@ venv/
 .venv/
 env/
 
-# Model artifacts (regenerate with train_model.py)
-model/*.pkl
-model/metrics.json
-model/feature_order.json
 
-# Data (regenerate with data/generate_synthetic_data.py, or add real Kaggle CSV)
-data/creditcard.csv
 
 # Node
 node_modules/
